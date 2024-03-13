@@ -1,0 +1,47 @@
+Resources:
+  IdentityCenterSAMLProvider:
+    Type: AWS::IAM::SAMLProvider
+    Properties:
+      Name: IdentityCenterSAMLProvider
+      SamlMetadataDocument: |
+        <EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata">
+          <!-- Replace this with your SAML metadata document -->
+        </EntityDescriptor>
+        
+  ExternalAccountRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Federated: !GetAtt IdentityCenterSAMLProvider.Arn
+            Action: "sts:AssumeRoleWithSAML"
+            Condition:
+              StringEquals:
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+      Policies:
+        - PolicyName: "ExternalAccountPolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action: <!-- Replace this with your custom IAM Policy -->
+                Resource: <!-- Replace this with your custom IAM Policy -->
+
+Outputs:
+  ExternalAccountID: 
+    Value: !Ref "AWS::AccountId"
+    Description: Account ID of External AWS Account
+
+  SAMLProviderName:
+    Value: !GetAtt IdentityCenterSAMLProvider.Arn
+    Description: Role ARN of SAML Provider
+
+  RoleName: 
+    Value: !Ref ExternalAccountRole
+    Description: Name of IAM Role
+
+
+
