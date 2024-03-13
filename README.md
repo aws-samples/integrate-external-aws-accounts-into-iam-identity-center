@@ -105,10 +105,13 @@ _Detailed step by step guide [here](https://community.aws/content/2dIMI8N7w7tGxb
 
 1. As of date of publishing, it is not possible to automate the deployment of the entirety of the solution, as the creation of external applications on AWS IAM Identity Center using CloudFormation is not currently supported. Updates to the repository will be made once this feature is made possible on future date.
 
-## Removal
+## Clean up 
 To remove the solution from your AWS account, follow these steps:
 1. On the primary AWS account, delete the customer-managed application through the AWS IAM Identity Center console page.
 2. On the external AWS account, navigate to the deployed CloudFormation template and select **Delete stack**.
+
+## Security
+See CONTRIBUTING for more information.
 
 ## License
 This library is licensed under the MIT-0 License. See the LICENSE file.
